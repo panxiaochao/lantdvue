@@ -1,52 +1,45 @@
 <template>
 <div>
-  <a-menu mode="inline" :openKeys="openKeys" @openChange="onOpenChange" theme="dark">
-    <a-sub-menu key="sub1">
-      <span slot="title">
-        <a-icon type="mail" /><span>首页</span></span>
-      <a-menu-item key="1">Option 1</a-menu-item>
-      <a-menu-item key="2">Option 2</a-menu-item>
-      <a-menu-item key="3">Option 3</a-menu-item>
-      <a-menu-item key="4">Option 4</a-menu-item>
-    </a-sub-menu>
-    <a-sub-menu key="sub2">
-      <span slot="title">
-        <a-icon type="appstore" /><span>资金管理</span></span>
-      <a-menu-item key="5">Option 5</a-menu-item>
-      <a-menu-item key="6">Option 6</a-menu-item>
-      <a-sub-menu key="sub3" title="Submenu">
-        <a-menu-item key="7">Option 7</a-menu-item>
-        <a-menu-item key="8">Option 8</a-menu-item>
-      </a-sub-menu>
-    </a-sub-menu>
-    <a-sub-menu key="sub4">
+  <a-menu mode="inline" :defaultSelectedKeys="['index']" theme="dark">
+    <a-menu-item key="index">
+      <a-icon type="pie-chart" />
+      <span>首页</span>
+    </a-menu-item>
+    <a-menu-item key="fund">
+      <a-icon type="appstore" />
+
+      <span>
+        <router-link to="/fund">资金管理 </router-link>
+      </span>
+
+    </a-menu-item>
+    <a-sub-menu key="system">
       <span slot="title">
         <a-icon type="setting" /><span>系统设置</span></span>
-      <a-menu-item key="9">Option 9</a-menu-item>
-      <a-menu-item key="10">Option 10</a-menu-item>
-      <a-menu-item key="11">Option 11</a-menu-item>
-      <a-menu-item key="12">Option 12</a-menu-item>
+      <a-menu-item key="bank">
+        <router-link to="/system/fundbank">银行卡管理</router-link>
+      </a-menu-item>
+      <a-menu-item key="sort">
+        <router-link to="/system/fundsort">资金类别管理</router-link>
+      </a-menu-item>
     </a-sub-menu>
   </a-menu>
 </div>
 </template>
 <script>
 export default {
+  name: 'NavMenu',
   data() {
-    return {
-      rootSubmenuKeys: ['sub1', 'sub2', 'sub4'],
-      openKeys: ['sub1'],
-    }
+    return {}
   },
   methods: {
-    onOpenChange(openKeys) {
-      const latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1)
-      if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-        this.openKeys = openKeys
-      } else {
-        this.openKeys = latestOpenKey ? [latestOpenKey] : []
-      }
-    }
+
   }
 }
 </script>
+<style scoped>
+.ant-menu-item>a {
+  display: inline-block;
+  widows: 80%;
+}
+</style>

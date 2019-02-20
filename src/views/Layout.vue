@@ -10,6 +10,7 @@
         <a-icon class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="()=> collapsed = !collapsed" />
       </a-layout-header>
       <a-layout-content class="content">
+        <app-main />
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -17,10 +18,12 @@
 </template>
 <script>
 import NavMenu from './NavMenu'
+import AppMain from './AppMain'
 export default {
   name: 'Layout',
   components: {
-    NavMenu
+    NavMenu,
+    AppMain
   },
   data() {
     return {
@@ -69,7 +72,7 @@ export default {
 
 #container .content {
   margin: 15px;
-  padding: 15px;
+  /*padding: 15px;*/
   background: #fff;
   min-height: 280px;
 }
