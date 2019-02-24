@@ -1,12 +1,11 @@
 import axios from 'axios'
 import {
-  Message,
-  MessageBox
-} from 'element-ui'
+  message
+} from 'ant-design-vue'
 
 // 创建axios实例
 const instance = axios.create({
-  baseURL: process.env.BASE_API, // api 的 base_url
+  baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
   timeout: 5000 // 请求超时时间，5s
 });
 
@@ -17,11 +16,7 @@ instance.interceptors.request.use(function(config) {
 }, function(error) {
   // 对请求错误做些什么
   //console.log(error); // for debug
-  Message({
-    message: error.message,
-    type: 'error',
-    duration: 3 * 1000
-  })
+  this.$message.error(error.message)
   return Promise.reject(error);
 });
 
@@ -32,11 +27,7 @@ instance.interceptors.response.use(function(response) {
   return res;
 }, function(error) {
   // 对响应错误做点什么
-  Message({
-    message: error.message,
-    type: 'error',
-    duration: 3 * 1000
-  })
+  this.$message.error(error.message)
   return Promise.reject(error);
 });
 

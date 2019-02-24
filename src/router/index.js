@@ -30,26 +30,26 @@ const routesMap = [{
 }, {
   path: '/system',
   component: Layout,
-  redirect: '/system/fundbank',
+  redirect: '/system/fundSortLayout',
   name: 'System',
   meta: {
     title: 'System'
   },
   children: [{
+    path: 'fundSortLayout',
+    name: 'FundSortLayout',
+    component: () =>
+      import('../views/system/FundSortLayout'),
+    meta: {
+      title: 'FundSortLayout'
+    }
+  }, {
     path: 'fundbank',
     name: 'FundBank',
     component: () =>
       import('../views/system/FundBank'),
     meta: {
       title: 'FundBank'
-    }
-  }, {
-    path: 'fundsort',
-    name: 'FundSort',
-    component: () =>
-      import('../views/system/FundSort'),
-    meta: {
-      title: 'FundSort'
     }
   }]
 }];

@@ -20,7 +20,7 @@
         <router-link to="/system/fundbank">银行卡管理</router-link>
       </a-menu-item>
       <a-menu-item key="sort">
-        <router-link to="/system/fundsort">资金类别管理</router-link>
+        <router-link to="/system/fundSortLayout">资金类别管理</router-link>
       </a-menu-item>
     </a-sub-menu>
   </a-menu>
