@@ -29,28 +29,11 @@ const columns = [{
   key: 'address',
 }];
 
-const data = [{
-  key: 1,
-  name: '出入规则',
-  age: 60,
-  address: 'New York No. 1 Lake Park'
-}, {
-  key: 13,
-  name: 'Jim Green sr.',
-  age: 72,
-  address: 'London No. 1 Lake Park'
-}, {
-  key: 2,
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park'
-}];
-
 export default {
   name: 'FundSort',
   data() {
     return {
-      data,
+      data: this.$store.state.fundSortList,
       columns,
       visible: false,
       form: this.$form.createForm(this)
@@ -64,6 +47,9 @@ export default {
       console.log(e);
       this.visible = false
     },
+  },
+  computed: {
+
   }
 }
 </script>

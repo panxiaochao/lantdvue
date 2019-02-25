@@ -1,7 +1,7 @@
 <template>
 <div class="sortnav">
   <h3>资金类别</h3>
-  <a-tree :loadData="onLoadData" :treeData="treeData" />
+  <a-tree :loadData="onLoadData" :treeData="treeData" @select="onSelect" />
 </div>
 </template>
 
@@ -20,6 +20,27 @@ export default {
     }
   },
   methods: {
+    onSelect(selectedKeys, e) {
+      //console.log(selectedKeys)
+      const data = [{
+        key: '1',
+        name: 'John Brown',
+        age: 32,
+        address: 'New York No. 1 Lake Park',
+      }, {
+        key: '2',
+        name: 'Jim Green',
+        age: 42,
+        address: 'London No. 1 Lake Park',
+      }, {
+        key: '3',
+        name: 'Joe Black',
+        age: 32,
+        address: 'Sidney No. 1 Lake Park',
+      }]
+
+      this.$store.dispatch('syncFundSortData', data)
+    },
     onLoadData(treeNode) {
       return new Promise((resolve) => {
         getListSortTree({
