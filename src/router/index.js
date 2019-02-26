@@ -9,7 +9,10 @@ Vue.use(Router)
 const routesMap = [{
   path: '/',
   component: Layout,
-  name: 'Layout'
+  name: 'Layout',
+  meta: {
+    title: 'Layout'
+  }
 }, {
   path: '/fund',
   component: Layout,
@@ -54,6 +57,16 @@ const routesMap = [{
   }]
 }];
 
-export default new Router({
+var router = new Router({
   routes: routesMap
 })
+
+router.beforeEach((to, from, next) => {
+  //console.log(to)
+  if (to.meta.title) {
+    document.title = to.meta.title; //在路由里面写入的meta里面的title字段
+  }
+  next()
+})
+
+export default router

@@ -1,11 +1,11 @@
 const fundsort = {
   state: {
-    fundSortList: []
+    data: []
   },
   mutations: {
     // 同步数据
     Sync_Fund_Sort_Data: (state, data) => {
-      state.fundSortList = data
+      state.data = data
     }
   },
   actions: {

@@ -7,3 +7,11 @@ export function getListSortTree(params) {
     params
   })
 }
+
+export function getListSortTable(params) {
+  return axios({
+    url: '/fundsort/listSortTable',
+    method: 'get',
+    params
+  })
+}

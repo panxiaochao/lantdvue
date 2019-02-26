@@ -7,7 +7,8 @@
 
 <script>
 import {
-  getListSortTree
+  getListSortTree,
+  getListSortTable
 } from '@/api/fundsort'
 export default {
   name: 'SortNav',
@@ -21,25 +22,19 @@ export default {
   },
   methods: {
     onSelect(selectedKeys, e) {
-      //console.log(selectedKeys)
-      const data = [{
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-      }, {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-      }, {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-      }]
-
-      this.$store.dispatch('syncFundSortData', data)
+      //console.log(e)
+      if (e.selected) {
+        getListSortTable({
+            parentid: selectedKeys[0]
+          })
+          .then(data => {
+            //  console.log(data)
+            var arr = JSON.parse(data)
+            this.$store.dispatch('syncFundSortData', arr)
+          }).catch(error => {
+            this.$message.error(error.message)
+          })
+      }
     },
     onLoadData(treeNode) {
       return new Promise((resolve) => {
