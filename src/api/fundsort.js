@@ -15,3 +15,27 @@ export function getListSortTable(params) {
     params
   })
 }
+
+export function getSort(params) {
+  return axios({
+    url: '/fundsort/getSort',
+    method: 'get',
+    params
+  })
+}
+
+export function addOrupdate(params) {
+  return axios({
+    url: '/fundsort/addOrupdate',
+    method: 'post',
+    params
+  })
+}
+
+export function deleteById(params) {
+  return axios({
+    url: '/fundsort/delete',
+    method: 'post',
+    params
+  })
+}

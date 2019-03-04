@@ -16,7 +16,7 @@ instance.interceptors.request.use(function(config) {
 }, function(error) {
   // 对请求错误做些什么
   //console.log(error); // for debug
-  this.$message.error(error.message)
+  message.error(error.message, 1)
   return Promise.reject(error);
 });
 
@@ -27,7 +27,7 @@ instance.interceptors.response.use(function(response) {
   return res;
 }, function(error) {
   // 对响应错误做点什么
-  this.$message.error(error.message)
+  message.error(error.message, 1)
   return Promise.reject(error);
 });
 

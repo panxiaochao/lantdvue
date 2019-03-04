@@ -35,7 +35,8 @@ export default {
   beforeRouteLeave(to, from, next) {
     // 导航离开该组件的对应路由时调用
     // 离开之前置空fundsort列表中的缓存
-    this.$store.dispatch('syncFundSortData', [])
+    this.$store.dispatch('emptytable')
+    this.$store.dispatch('setTreeNode', {})
     next()
   }
 }

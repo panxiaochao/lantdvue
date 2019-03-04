@@ -42,7 +42,7 @@ const routesMap = [{
     path: 'fundSortLayout',
     name: 'FundSortLayout',
     component: () =>
-      import('../views/system/FundSortLayout'),
+      import('../views/system/sort/FundSortLayout'),
     meta: {
       title: 'FundSortLayout'
     }
@@ -50,7 +50,7 @@ const routesMap = [{
     path: 'fundbank',
     name: 'FundBank',
     component: () =>
-      import('../views/system/FundBank'),
+      import('../views/system/bank/FundBankLayout'),
     meta: {
       title: 'FundBank'
     }
