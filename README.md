@@ -1,12 +1,12 @@
 # lantdvue
 
-> A Vue.js 2.0 Admin Project for Web，UI From Element-UI
+> A Vue.js 2.0 Admin Project for Web，UI From Ant Design of Vue
 
 ## Browser Support
 Modern browsers and Internet Explorer 10+.
 
 ## Version
-X.X.X
+0.0.2
 
 ## Author
 Lypxc
