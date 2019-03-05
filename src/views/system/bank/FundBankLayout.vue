@@ -8,10 +8,13 @@
   </a-layout-sider>
   <a-layout-content>
     <div class="fundbank">
+      <a-row class="tools">
+        <Add :super-this="superthis" :params="params" is-add />
+      </a-row>
       <a-table :columns="columns" :dataSource="tableData" bordered size="middle" :loading="loading">
         <template slot="operation" slot-scope="text, record">
           <span>
-            <a href="javascript:void(0);" @click="edit(record.key)">编 辑</a>
+            <Edit :super-this="superthis" :data="record" :params="params" :is-add="false" />
             <a-divider type="vertical" />
             <a-popconfirm title="确认删除此条吗？" @confirm="() => onDelete(record.key)">
               <a href="javascript:;">删 除</a>
@@ -26,8 +29,12 @@
 <script>
 import {
   getListBankTree,
-  getListBankTable
+  getListBankTable,
+  deleteById
 } from '@/api/fundbank'
+
+import Add from './modules/Add'
+import Edit from './modules/Edit'
 
 const columns = [{
   title: '银行卡',
@@ -54,6 +61,10 @@ const columns = [{
 
 export default {
   name: 'FundBankLayout',
+  components: {
+    Add,
+    Edit
+  },
   data() {
     return {
       alheight: {
@@ -69,6 +80,11 @@ export default {
       loading: {
         spinning: false,
         tip: '数据加载中......'
+      },
+      superthis: this,
+      isAdd: true, // 默认新增
+      params: {
+        parentid: ''
       }
     }
   },
@@ -88,8 +104,9 @@ export default {
   methods: {
     // nav 选择事件
     onSelect(selectedKeys, e) {
-      //console.log(e.node.dataRef)
+      console.log(e)
       if (e.selected) {
+        this.params.parentid = selectedKeys[0]
         this.loadTable(selectedKeys[0])
       }
     },
@@ -138,15 +155,30 @@ export default {
     },
     // 新增table数据
     addBank() {
-
+      //已采用组件方式
     },
     // 编辑table数据
     editTable() {
-
+      //已采用组件方式
     },
     // 删除table数据
-    deleteTableById() {
-
+    onDelete(key) {
+      const that = this
+      this.loading.spinning = true
+      deleteById({
+          id: key
+        })
+        .then(data => {
+          var res = JSON.parse(data)
+          if (!res.success) {
+            that.$message.error(res.errorMsg, 1)
+          } else {
+            that.loadTable(this.params.parentid)
+          }
+          this.loading.spinning = false
+        }).catch(error => {
+          this.loading.spinning = false
+        })
     }
 
   }
@@ -172,5 +204,12 @@ export default {
 
 .fundbank {
     padding: 15px;
+}
+
+.tools {
+    margin-bottom: 10px;
+    text-align: right;
+    border-bottom: 1px solid #ebeef5;
+    padding-bottom: 10px;
 }
 </style>
