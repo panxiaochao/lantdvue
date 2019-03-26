@@ -7,11 +7,9 @@
     </a-menu-item>
     <a-menu-item key="fund">
       <a-icon type="appstore" />
-
-      <span>
-        <router-link to="/fund">资金管理 </router-link>
-      </span>
-
+      <router-link to="/fund">
+        <span>资金管理</span>
+      </router-link>
     </a-menu-item>
     <a-sub-menu key="system">
       <span slot="title">

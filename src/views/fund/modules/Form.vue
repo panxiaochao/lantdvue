@@ -7,6 +7,13 @@
           {initialValue: formdata.bankname, rules: [{ required: true, message: '请输入银行卡' }]}
         ]" />
     </a-form-item>
+    <a-form-item label="交易时间" :label-col="{span: 5}" :wrapper-col="{span: 16}">
+      <a-date-picker placeholder="请选择交易时间" v-decorator="[
+          'tradetimeStr',
+          {initialValue: formdata.tradetimeStr, rules: [{ required: true, message: '请选择交易时间' }]}
+        ]" style="width: 100%" />
+
+    </a-form-item>
     <a-form-item label="交易类别" :label-col="{span: 5}" :wrapper-col="{span: 16}">
       <a-input v-decorator="[
           'bankname',
@@ -19,17 +26,11 @@
           {initialValue: formdata.bankname, rules: [{ required: true, message: '请输入银行卡' }]}
         ]" />
     </a-form-item>
-    <a-form-item label="交易时间" :label-col="{span: 5}" :wrapper-col="{span: 16}">
-      <a-input v-decorator="[
-          'bankname',
-          {initialValue: formdata.bankname, rules: [{ required: true, message: '请输入银行卡' }]}
-        ]" />
-    </a-form-item>
     <a-form-item label="交易说明" :label-col="{span: 5}" :wrapper-col="{span: 16}">
-      <a-input v-decorator="[
-          'bankname',
-          {initialValue: formdata.bankname, rules: [{ required: true, message: '请输入银行卡' }]}
-        ]" />
+      <a-textarea placeholder="交易说明" :rows="4" v-decorator="[
+            'summary',
+            {initialValue: formdata.summary}
+          ]" />
     </a-form-item>
   </a-form>
 </a-modal>
@@ -61,16 +62,14 @@ export default {
       visible: false,
       formdata: {
         id: '',
-        pbankid: '',
-        bankname: '',
-        banktype: '',
-        bankflag: '1'
+        tradetimeStr: '',
+        summary: ''
       }
     }
   },
   methods: {
     onOk() {
-      console.log('ok')
+      //console.log('ok')
       const form = this.form
       const that = this
       form.validateFields((err, values) => {
