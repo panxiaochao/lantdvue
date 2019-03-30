@@ -31,3 +31,11 @@ export function deleteById(params) {
     params
   })
 }
+
+export function getSalarySortTree(params) {
+  return axios({
+    url: '/fundsort/getSalarySortTree',
+    method: 'get',
+    params
+  })
+}

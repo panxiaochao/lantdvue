@@ -30,9 +30,11 @@ export default {
     onClick() {
       const _this = this.$refs.form
       const formdata = this.data || {}
+      _this.pbankname = this.params.pbankname
       _this.formdata = {
         pbankid: this.params.parentid,
-        bankflag: '1'
+        bankflag: '1',
+        bankvalue: 0
       }
       _this.visible = true
     }

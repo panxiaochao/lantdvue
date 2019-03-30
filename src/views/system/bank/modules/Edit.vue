@@ -31,15 +31,17 @@ export default {
       const _this = this.$refs.form
       if (!this.isAdd) {
         const formdata = this.data || {}
-        console.log(formdata)
+        //console.log(formdata)
+        _this.pbankname = this.params.pbankname
         _this.formdata = {
           id: formdata.key,
           pbankid: this.params.parentid,
           bankname: formdata.bankname,
           banktype: formdata.banktype,
-          bankflag: formdata.bankflag
+          bankflag: formdata.bankflag,
+          bankvalue: formdata.bankvalue
         }
-        console.log(_this.formdata)
+        //console.log(_this.formdata)
       }
       _this.visible = true
     }

@@ -15,12 +15,12 @@
         <span slot="pay" slot-scope="pay" style="color:#4caf50;">
           <b>{{pay}}</b>
         </span>
-        <span slot="balance" slot-scope="balance">
+        <span slot="balance" slot-scope="balance" style="color:#6D4C41;">
           <b>{{balance}}</b>
         </span>
         <template slot="operation" slot-scope="text, record">
           <span>
-            <a-popconfirm title="确认删除此条吗？" @confirm="() => onDelete(record.key)">
+            <a-popconfirm title="确认删除此条，并且还原数据？" @confirm="() => onDelete(record.id)">
               <a href="javascript:;">删 除</a>
             </a-popconfirm>
           </span>
@@ -113,7 +113,8 @@ export default {
       superthis: this,
       isAdd: true, // 默认新增
       params: {
-        bankid: ''
+        bankid: '',
+        bankname: ''
       }
     }
   },
@@ -168,7 +169,7 @@ export default {
           if (!res.success) {
             that.$message.error(res.errorMsg, 1)
           } else {
-            that.loadTable(this.params.parentid)
+            that.loadTable(1)
           }
           this.loading.spinning = false
         }).catch(error => {

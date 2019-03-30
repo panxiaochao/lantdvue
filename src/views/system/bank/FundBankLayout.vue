@@ -84,7 +84,8 @@ export default {
       superthis: this,
       isAdd: true, // 默认新增
       params: {
-        parentid: ''
+        parentid: '',
+        pbankname: ''
       }
     }
   },
@@ -103,9 +104,10 @@ export default {
   methods: {
     // nav 选择事件
     onSelect(selectedKeys, e) {
-      console.log(e)
+      //console.log(e)
       if (e.selected) {
         this.params.parentid = selectedKeys[0]
+        this.params.pbankname = e.node.dataRef.title
         this.loadTable(selectedKeys[0])
       }
     },

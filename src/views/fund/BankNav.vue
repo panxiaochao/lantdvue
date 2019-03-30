@@ -31,10 +31,9 @@ export default {
   methods: {
     onSelect(selectedKeys, e) {
       //console.log(this.$dayjs(1318781876406).format('YYYY-MM-DD HH:mm:ss'))
-
       if (e.selected && e.node.dataRef.isLeaf) {
-        //console.log(selectedKeys)
         this.superThis.params.bankid = selectedKeys[0]
+        this.superThis.params.bankname = e.node.dataRef.title
         this.superThis.loadTable(1)
       }
     },

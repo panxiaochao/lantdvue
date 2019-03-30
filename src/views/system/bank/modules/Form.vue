@@ -3,7 +3,7 @@
   <a-form :form="form">
     <a-form-item label="父节点" :label-col="{span: 5}" :wrapper-col="{span: 16}">
       <span class="ant-form-text">
-        XXXX
+        {{pbankname}}
       </span>
     </a-form-item>
     <a-form-item label="银行卡" :label-col="{span: 5}" :wrapper-col="{span: 16}">
@@ -16,6 +16,12 @@
       <a-input v-decorator="[
           'banktype',
           {initialValue: formdata.banktype, rules: [{ required: true, message: '银行卡编码' }]}
+        ]" />
+    </a-form-item>
+    <a-form-item label="余额(元)" :label-col="{span: 5}" :wrapper-col="{span: 16}">
+      <a-input v-decorator="[
+          'bankvalue',
+          {initialValue: formdata.bankvalue, rules: [{ required: true, message: '余额' }]}
         ]" />
     </a-form-item>
     <a-form-item label="银行卡类别" :label-col="{span: 5}" :wrapper-col="{span: 16}">
@@ -52,12 +58,14 @@ export default {
     return {
       title: this.isAdd ? '新增' : '修改',
       visible: false,
+      pbankname: '',
       formdata: {
         id: '',
         pbankid: '',
         bankname: '',
         banktype: '',
-        bankflag: '1'
+        bankflag: '1',
+        bankvalue: 0
       }
     }
   },
