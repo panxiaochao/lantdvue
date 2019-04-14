@@ -3,7 +3,9 @@
   <a-menu mode="inline" :defaultSelectedKeys="['index']" theme="dark">
     <a-menu-item key="index">
       <a-icon type="pie-chart" />
-      <span>首页</span>
+      <router-link to="/index">
+        <span>首页</span>
+      </router-link>
     </a-menu-item>
     <a-menu-item key="fund">
       <a-icon type="appstore" />

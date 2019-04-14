@@ -73,7 +73,7 @@ export default {
 #container .content {
   margin: 15px;
   /*padding: 15px;*/
-  background: #fff;
+  /*background: #fff;*/
   min-height: 280px;
 }
 </style>

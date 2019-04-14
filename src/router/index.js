@@ -10,9 +10,18 @@ const routesMap = [{
   path: '/',
   component: Layout,
   name: 'Layout',
+  redirect: '/index',
   meta: {
-    title: 'Layout'
-  }
+    title: 'index'
+  },
+  children: [{
+    path: 'index',
+    component: () =>
+      import('../views/index/IndexLayout'),
+    meta: {
+      title: 'index'
+    }
+  }]
 }, {
   path: '/fund',
   component: Layout,
