@@ -42,4 +42,10 @@ export default {
   display: inline-block;
   widows: 80%;
 }
+
+.ant-menu-inline-collapsed>.ant-menu-item .anticon+a>span {
+  max-width: 0;
+  display: inline-block;
+  opacity: 0;
+}
 </style>

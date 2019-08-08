@@ -18,6 +18,12 @@
           {initialValue: formdata.sorttype, rules: [{ required: true, message: '请输入类型' }]}
         ]" />
     </a-form-item>
+    <a-form-item label="排序" :label-col="{span: 5}" :wrapper-col="{span: 16}">
+      <a-input v-decorator="[
+          'code',
+          {initialValue: formdata.code}
+        ]" />
+    </a-form-item>
   </a-form>
 </a-modal>
 </template>
@@ -57,7 +63,7 @@ export default {
   },
   methods: {
     onOk() {
-      console.log('ok')
+      //console.log('ok')
       const form = this.form
       const that = this
       form.validateFields((err, values) => {
@@ -78,7 +84,7 @@ export default {
                 that.$message.error(res.errorMsg)
               } else {
                 // 更新树节点
-                //this.$store.dispatch('reloadnav', true)
+                that.superThis.reloadNav();
                 // 更新table表格
                 that.superThis.loadTable(this.formdata.psortid)
                 // 关闭弹窗
@@ -93,7 +99,7 @@ export default {
       });
     },
     onCancel() {
-      console.log('cancel')
+      //console.log('cancel')
       this.form.resetFields()
       this.visible = false
     }

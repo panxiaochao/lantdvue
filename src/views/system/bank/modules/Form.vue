@@ -28,7 +28,14 @@
       <a-radio-group v-decorator="['bankflag', {initialValue: formdata.bankflag, rules: [{ required: true, message: '请选择银行卡类别' }]}]">
         <a-radio value="1">借记卡</a-radio>
         <a-radio value="2">信用卡</a-radio>
+        <a-radio value="3">其它</a-radio>
       </a-radio-group>
+    </a-form-item>
+    <a-form-item label="排序" :label-col="{span: 5}" :wrapper-col="{span: 16}">
+      <a-input v-decorator="[
+          'code',
+          {initialValue: formdata.code}
+        ]" />
     </a-form-item>
   </a-form>
 </a-modal>
@@ -71,7 +78,7 @@ export default {
   },
   methods: {
     onOk() {
-      console.log('ok')
+      //  console.log('ok')
       const form = this.form
       const that = this
       form.validateFields((err, values) => {
@@ -92,7 +99,7 @@ export default {
                 that.$message.error(res.errorMsg)
               } else {
                 // 更新树节点
-                //this.$store.dispatch('reloadnav', true)
+                that.superThis.reloadNav();
                 // 更新table表格
                 that.superThis.loadTable(this.formdata.pbankid)
                 // 关闭弹窗
@@ -101,13 +108,13 @@ export default {
                 form.resetFields()
               }
             }).catch(error => {
-              //that.$message.error(error.message)
+              that.$message.error(error.message)
             })
         }
       });
     },
     onCancel() {
-      console.log('cancel')
+      //  console.log('cancel')
       this.form.resetFields()
       this.visible = false
     }

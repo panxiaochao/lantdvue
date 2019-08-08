@@ -31,7 +31,8 @@ export default {
       const _this = this.$refs.form
       if (!this.isAdd) {
         const formdata = this.data || {}
-        console.log(formdata)
+        //console.log(formdata)
+        this.title = '编辑'
         _this.formdata = {
           id: formdata.key,
           pbankid: this.params.parentid,
@@ -39,7 +40,7 @@ export default {
           banktype: formdata.banktype,
           bankflag: formdata.bankflag
         }
-        console.log(_this.formdata)
+        //console.log(_this.formdata)
       }
       _this.visible = true
     }

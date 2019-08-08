@@ -7,3 +7,21 @@
   border-right: 1px solid #dcdcdc;
   border-bottom: 1px solid #dcdcdc;
 }
+
+.ant-card-wider-padding .ant-card-head {
+  padding: 0 15px;
+}
+
+.ant-card-wider-padding .ant-card-body {
+  padding: 15px;
+}
+/*nprogress*/
+
+#nprogress .bar {
+  background: #1890ff;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #1890ff;
+  border-left-color: #1890ff;
+}

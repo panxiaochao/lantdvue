@@ -3,7 +3,7 @@
   <a-layout-sider theme="light" width="250px">
     <div class="banknav">
       <h3>资金类别管理</h3>
-      <a-tree :loadData="onLoadNav" :treeData="treeData" @select="onSelect" />
+      <a-tree :loadData="onLoadNav" :treeData="treeData" @select="onSelect" @expand="onExpand" />
     </div>
   </a-layout-sider>
   <a-layout-content>
@@ -45,6 +45,10 @@ const columns = [{
   dataIndex: 'sorttype',
   key: 'sorttype'
 }, {
+  title: '排序',
+  dataIndex: 'code',
+  key: 'code'
+}, {
   title: '操作',
   dataIndex: 'operation',
   key: 'operation',
@@ -82,7 +86,8 @@ export default {
         parentid: '',
         psortname: '',
         sorttype: ''
-      }
+      },
+      selectNode: null
     }
   },
   created: function() {
@@ -100,7 +105,8 @@ export default {
   methods: {
     // nav 选择事件
     onSelect(selectedKeys, e) {
-      console.log(e.node.dataRef)
+      //console.log(e.node)
+      this.params.selectNode = e.node
       if (e.selected) {
         this.params.parentid = selectedKeys[0]
         this.params.psortname = e.node.dataRef.title
@@ -108,9 +114,16 @@ export default {
         this.loadTable(selectedKeys[0])
       }
     },
+    // nav 展开事件
+    onExpand(expandedKeys, e) {
+      if (e.expanded) {
+        //console.log("true");
+        this.params.selectNode = e.node
+      }
+    },
     // 异步加载nav数据
     onLoadNav(treeNode) {
-      //console.log("onLoadData")
+      //console.log(treeNode)
       //this.treeNode = treeNode
       return new Promise((resolve) => {
         getListSortTree({
@@ -131,7 +144,31 @@ export default {
     },
     // 重新加载nav
     reloadNav() {
-      //console.log("reloadNav")
+      //console.log(this.params.selectNode)
+      let treeNode = this.params.selectNode
+      // 展开的情况下刷新
+      if (treeNode.expanded) {
+        //console.log("refresh")
+        return new Promise((resolve) => {
+          getListSortTree({
+              parentid: treeNode.dataRef.key
+            })
+            .then(data => {
+              let treedata = JSON.parse(data)
+              treeNode.dataRef.children = treedata
+              this.treeData = [...this.treeData]
+              resolve()
+            }).catch(error => {
+              //console.log(error)
+              //this.$message.error(error.message)
+              resolve()
+              return
+            })
+        })
+
+      } else {
+        //console.log("no refresh")
+      }
 
     },
     // 加载table数据
@@ -174,6 +211,7 @@ export default {
             that.loadTable(this.params.parentid)
           }
           this.loading.spinning = false
+          that.reloadNav()
         }).catch(error => {
           this.loading.spinning = false
         })

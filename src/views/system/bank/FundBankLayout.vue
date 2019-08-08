@@ -3,7 +3,7 @@
   <a-layout-sider theme="light" width="250px">
     <div class="banknav">
       <h3>银行卡类别管理</h3>
-      <a-tree :loadData="onLoadNav" :treeData="treeData" @select="onSelect" />
+      <a-tree :loadData="onLoadNav" :treeData="treeData" @select="onSelect" @expand="onExpand" />
     </div>
   </a-layout-sider>
   <a-layout-content>
@@ -43,8 +43,8 @@ const columns = [{
   width: '250px'
 }, {
   title: '类别',
-  dataIndex: 'bankflag',
-  key: 'bankflag'
+  dataIndex: 'bankflagname',
+  key: 'bankflagname'
 }, {
   title: '编码',
   dataIndex: 'banktype',
@@ -86,7 +86,8 @@ export default {
       params: {
         parentid: '',
         pbankname: ''
-      }
+      },
+      selectNode: null
     }
   },
   created: function() {
@@ -104,11 +105,18 @@ export default {
   methods: {
     // nav 选择事件
     onSelect(selectedKeys, e) {
-      //console.log(e)
+      this.params.selectNode = e.node
       if (e.selected) {
         this.params.parentid = selectedKeys[0]
         this.params.pbankname = e.node.dataRef.title
         this.loadTable(selectedKeys[0])
+      }
+    },
+    // nav 展开事件
+    onExpand(expandedKeys, e) {
+      if (e.expanded) {
+        //console.log("true");
+        this.params.selectNode = e.node
       }
     },
     // 异步加载nav数据
@@ -135,7 +143,30 @@ export default {
     // 重新加载nav
     reloadNav() {
       //console.log("reloadNav")
+      let treeNode = this.params.selectNode
+      // 展开的情况下刷新
+      if (treeNode.expanded) {
+        //console.log("refresh")
+        return new Promise((resolve) => {
+          getListBankTree({
+              parentid: treeNode.dataRef.key
+            })
+            .then(data => {
+              let treedata = JSON.parse(data)
+              treeNode.dataRef.children = treedata
+              this.treeData = [...this.treeData]
+              resolve()
+            }).catch(error => {
+              //console.log(error)
+              //this.$message.error(error.message)
+              resolve()
+              return
+            })
+        })
 
+      } else {
+        //console.log("no refresh")
+      }
     },
     // 加载table数据
     loadTable(key) {
@@ -177,6 +208,7 @@ export default {
             that.loadTable(this.params.parentid)
           }
           this.loading.spinning = false
+          that.reloadNav()
         }).catch(error => {
           this.loading.spinning = false
         })

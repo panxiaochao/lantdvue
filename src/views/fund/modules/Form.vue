@@ -1,5 +1,5 @@
 <template>
-<a-modal :title="title" :maskClosable="false" :visible="visible" @ok="onOk" @cancel="onCancel">
+<a-modal :title="title" :maskClosable="false" :visible="visible" @ok="onOk" @cancel="onCancel" :footer="footer">
   <a-form :form="form">
     <a-form-item label="支付方式" :label-col="{span: 5}" :wrapper-col="{span: 16}">
       <span class="ant-form-text">
@@ -43,10 +43,6 @@ import {
 
 export default {
   props: {
-    isAdd: {
-      type: Boolean,
-      required: true
-    },
     superThis: {
       type: Object,
       default: null
@@ -60,6 +56,7 @@ export default {
       title: this.isAdd ? '新增' : '修改',
       visible: false,
       bankName: '',
+      footer: '',
       formdata: {
         bankid: '',
         salarymoney: 0,

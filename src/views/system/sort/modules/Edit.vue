@@ -37,7 +37,9 @@ export default {
           id: formdata.key,
           psortid: this.params.parentid,
           sortname: formdata.sortname,
-          sorttype: formdata.sorttype
+          sorttype: formdata.sorttype,
+          code: formdata.code
+
         }
         //console.log(_this.formdata)
       }

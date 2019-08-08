@@ -20,6 +20,8 @@
         </span>
         <template slot="operation" slot-scope="text, record">
           <span>
+            <Deatils :data="record" />
+            <a-divider type="vertical" />
             <a-popconfirm title="确认删除此条，并且还原数据？" @confirm="() => onDelete(record.id)">
               <a href="javascript:;">删 除</a>
             </a-popconfirm>
@@ -39,19 +41,12 @@ import {
 import BankNav from './BankNav'
 import Add from './modules/Add'
 import Edit from './modules/Edit'
+import Deatils from './modules/Deatils'
 
 const columns = [{
   title: '支付方式',
   dataIndex: 'bankname',
   key: 'bankname'
-}, {
-  title: '交易说明',
-  dataIndex: 'summary',
-  key: 'summary'
-}, {
-  title: '交易类别',
-  dataIndex: 'sortname',
-  key: 'sortname'
 }, {
   title: '交易时间',
   dataIndex: 'tradetimeStr',
@@ -84,7 +79,8 @@ const columns = [{
   scopedSlots: {
     customRender: 'operation'
   },
-  width: '50px'
+  align: 'center',
+  width: '120px'
 }];
 
 export default {
@@ -92,7 +88,8 @@ export default {
   components: {
     BankNav,
     Add,
-    Edit
+    Edit,
+    Deatils
   },
   data() {
     return {

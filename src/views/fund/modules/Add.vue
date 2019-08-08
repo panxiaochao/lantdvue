@@ -35,6 +35,7 @@ export default {
         bankid: this.params.bankid
       }
       _this.visible = true
+      _this.title = '新增'
     }
   }
 }
