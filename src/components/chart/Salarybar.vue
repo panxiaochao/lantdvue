@@ -32,7 +32,10 @@ export default {
     };
   },
   mounted() {
-    this.initChart();
+    const that = this
+    setTimeout(function() {
+      that.initChart();
+    }, 200)
   },
   beforeDestroy() {
     //console.log("beforeDestroy");
@@ -45,16 +48,20 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(this.$refs.myEchart, 'macarons');
+      const that = this
+      that.chart = echarts.init(this.$refs.myEchart, 'macarons');
       const option = {
         tooltip: {
           trigger: 'item',
+          confine: true,
           formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
         series: [{
-          name: '访问来源',
+          name: '资金账户',
           type: 'pie',
-          radius: '70%',
+          minAngle: 15,
+          minShowLabelAngle: 15,
+          radius: '60%',
           center: ['50%', '50%'],
           data: this.data,
           label: {
@@ -70,7 +77,10 @@ export default {
         }]
       }
       // 把配置和数据放这里
-      this.chart.setOption(option);
+      that.chart.setOption(option);
+      window.onresize = () => {
+        that.chart.resize()
+      }
     }
   }
 };

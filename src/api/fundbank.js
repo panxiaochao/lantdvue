@@ -39,3 +39,11 @@ export function deleteById(params) {
     params
   })
 }
+
+export function getBankValueList(params) {
+  return axios({
+    url: '/fundbank/selectBankValueList',
+    method: 'get',
+    params
+  })
+}

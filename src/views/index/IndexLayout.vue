@@ -2,13 +2,20 @@
 <div class="index">
   <a-row :gutter="24" class="card-row">
     <a-col :md="24">
-      <a-card title="账户总览" :loading="salarychart.loading" :bordered="false">
+      <a-card :loading="salarychart.loading" :bordered="false">
+        <template v-slot:title>
+          <div class="card-cus-title">
+            <div>账户总览</div>
+            <div class="salarysumtext">资金总额：<span> 元</span>
+            </div>
+          </div>
+        </template>
         <a-row>
           <a-col :md="16">
             <Salarybar id="salarybar" :data="salarychart.data" />
           </a-col>
           <a-col :md="8">
-            <rank-list title="金额排行榜" :list="salarychart.rankList" />
+            <rank-list title="账户排行榜" :list="salarychart.rankList" />
           </a-col>
         </a-row>
       </a-card>
@@ -41,6 +48,10 @@
 </div>
 </template>
 <script>
+import {
+  getBankValueList
+} from '@/api/fundbank'
+
 import RankList from '@/components/index/RankList'
 import Salarybar from '@/components/chart/Salarybar'
 
@@ -54,9 +65,9 @@ export default {
       salarychart: {
         loading: true,
         data: [],
-        rankList: []
+        rankList: [],
+        salarysum: 0
       }
-
     }
   },
   mounted() {
@@ -66,41 +77,26 @@ export default {
   methods: {
     salarychartinit() {
       const that = this
-      const data = [{
-          value: 335,
-          name: '直接访问'
-        },
-        {
-          value: 310,
-          name: '邮件营销'
-        },
-        {
-          value: 234,
-          name: '联盟广告'
-        },
-        {
-          value: 135,
-          name: '视频广告'
-        },
-        {
-          value: 1548,
-          name: '搜索引擎'
-        }
-      ]
-      that.salarychart.data = data
-      //
       const rankList = []
-      for (let i = 0; i < 7; i++) {
-        rankList.push({
-          name: '工商银行 ' + (i + 1) + ' 号店',
-          total: 1234.56 - i * 100
+      getBankValueList()
+        .then(data => {
+          var arr = JSON.parse(data)
+          console.log(arr)
+          that.salarychart.data = arr
+          for (let i = 0; i < arr.length; i++) {
+            rankList.push({
+              name: arr[i].name,
+              total: arr[i].value
+            })
+          }
+          that.salarychart.rankList = rankList
+          setTimeout(function() {
+            that.salarychart.loading = false
+          }, 200)
+        }).catch(error => {
+          //message.error(error.message)
+          that.salarychart.loading = false
         })
-      }
-      that.salarychart.rankList = rankList
-      //
-      setTimeout(function() {
-        that.salarychart.loading = false
-      }, 500)
     }
   }
 }
@@ -111,5 +107,15 @@ export default {
   margin-right: 0 !important;
   margin-left: 0 !important;
   margin-bottom: 15px;
+}
+
+.ant-card-head-title .card-cus-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ant-card-head-title .card-cus-title>.salarysumtext>span {
+  color: #F44336;
+  font-weight: 600;
 }
 </style>
