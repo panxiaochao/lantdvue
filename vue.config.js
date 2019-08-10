@@ -2,7 +2,7 @@ module.exports = {
   //从 Vue CLI 3.3 起已弃用，请使用publicPath
   //baseUrl:'',
   publicPath: process.env.NODE_ENV === 'production' ?
-    '/vue3/' : '/',
+    '/fund/' : '/',
 
   outputDir: 'dist',
 
