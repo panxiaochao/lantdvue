@@ -60,8 +60,7 @@ export default {
       salarychart: {
         loading: true,
         data: [],
-        rankList: [],
-        salarysum: 0
+        rankList: []
       },
       sortoutpie: {
         loading: true,
