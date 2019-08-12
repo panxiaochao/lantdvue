@@ -19,7 +19,7 @@ const routesMap = [{
     component: () =>
       import('../views/index/IndexLayout'),
     meta: {
-      title: 'index'
+      title: '首页'
     }
   }]
 }, {
@@ -36,7 +36,7 @@ const routesMap = [{
     component: () =>
       import('../views/fund/FundLayout'),
     meta: {
-      title: 'FundLayout'
+      title: '资金管理'
     }
   }]
 }, {
@@ -45,7 +45,7 @@ const routesMap = [{
   redirect: '/system/fundSortLayout',
   name: 'System',
   meta: {
-    title: 'System'
+    title: '系统管理'
   },
   children: [{
     path: 'fundSortLayout',
@@ -53,7 +53,7 @@ const routesMap = [{
     component: () =>
       import('../views/system/sort/FundSortLayout'),
     meta: {
-      title: 'FundSortLayout'
+      title: '资金类别管理'
     }
   }, {
     path: 'fundbank',
@@ -61,7 +61,7 @@ const routesMap = [{
     component: () =>
       import('../views/system/bank/FundBankLayout'),
     meta: {
-      title: 'FundBank'
+      title: '银行卡管理'
     }
   }]
 }];

@@ -6,13 +6,12 @@
         <template v-slot:title>
           <div class="card-cus-title">
             <div>账户总览</div>
-            <div class="salarysumtext">资金总额：<span> 元</span>
-            </div>
+            <div class="salarysumtext"></div>
           </div>
         </template>
         <a-row>
           <a-col :md="16">
-            <Salarybar id="salarybar" :data="salarychart.data" />
+            <Salarybar id="salarybar" height="400px" :data="salarychart.data" />
           </a-col>
           <a-col :md="8">
             <rank-list title="账户排行榜" :list="salarychart.rankList" />
@@ -23,25 +22,13 @@
   </a-row>
   <a-row :gutter="24" class="card-row">
     <a-col :md="12">
-      <a-card title="3月支出类别占比" loading :bordered="false">
-        <p>card content</p>
+      <a-card title="3月支出类别占比" :loading="sortoutpie.loading" :bordered="false">
+        <SortOutPie id="sortoutpie" :data="sortoutpie.data" />
       </a-card>
     </a-col>
     <a-col :md="12">
-      <a-card title="3月收入排行" :bordered="false">
-        <p>card content</p>
-      </a-card>
-    </a-col>
-  </a-row>
-  <a-row :gutter="24" class="card-row">
-    <a-col :md="12">
-      <a-card title="支出统计" :bordered="false">
-        <p>card content</p>
-      </a-card>
-    </a-col>
-    <a-col :md="12">
-      <a-card title="收入统计" :bordered="false">
-        <p>card content</p>
+      <a-card title="3月收入排行" :loading="sortinpie.loading" :bordered="false">
+        <SortOutPie id="sortinpie" :data="sortinpie.data" />
       </a-card>
     </a-col>
   </a-row>
@@ -52,13 +39,21 @@ import {
   getBankValueList
 } from '@/api/fundbank'
 
+import {
+  getSortGroupBy
+} from '@/api/fundsalary'
+
 import RankList from '@/components/index/RankList'
 import Salarybar from '@/components/chart/Salarybar'
+import SortOutPie from '@/components/chart/SortOutPie'
+import SortInPie from '@/components/chart/SortInPie'
 
 export default {
   components: {
     RankList,
-    Salarybar
+    Salarybar,
+    SortOutPie,
+    SortInPie
   },
   data() {
     return {
@@ -67,35 +62,85 @@ export default {
         data: [],
         rankList: [],
         salarysum: 0
+      },
+      sortoutpie: {
+        loading: true,
+        data: [],
+      },
+      sortinpie: {
+        loading: true,
+        data: [],
       }
     }
   },
+  // 页面初始化
   mounted() {
-    // 页面初始化
     this.salarychartinit();
+    this.sortoutpieinit();
+    this.sortinpieinit();
   },
   methods: {
     salarychartinit() {
       const that = this
       const rankList = []
+      const salarychartObj = {
+        xAxis: [],
+        data: []
+      }
       getBankValueList()
         .then(data => {
           var arr = JSON.parse(data)
-          console.log(arr)
-          that.salarychart.data = arr
+          //  console.log(arr)
           for (let i = 0; i < arr.length; i++) {
             rankList.push({
               name: arr[i].name,
               total: arr[i].value
             })
+            salarychartObj.xAxis.push(arr[i].name)
+            salarychartObj.data.push(arr[i].value)
           }
           that.salarychart.rankList = rankList
+          that.salarychart.data = salarychartObj
           setTimeout(function() {
             that.salarychart.loading = false
           }, 200)
         }).catch(error => {
           //message.error(error.message)
           that.salarychart.loading = false
+        })
+    },
+    sortoutpieinit() {
+      const that = this
+      getSortGroupBy({
+          tradetype: 'out'
+        })
+        .then(data => {
+          var arr = JSON.parse(data)
+          //console.log(arr)
+          that.sortoutpie.data = arr
+          setTimeout(function() {
+            that.sortoutpie.loading = false
+          }, 200)
+        }).catch(error => {
+          //message.error(error.message)
+          that.sortoutpie.loading = false
+        })
+    },
+    sortinpieinit() {
+      const that = this
+      getSortGroupBy({
+          tradetype: 'in'
+        })
+        .then(data => {
+          var arr = JSON.parse(data)
+          //  console.log(arr)
+          that.sortinpie.data = arr
+          setTimeout(function() {
+            that.sortinpie.loading = false
+          }, 200)
+        }).catch(error => {
+          //message.error(error.message)
+          that.sortinpie.loading = false
         })
     }
   }

@@ -39,3 +39,11 @@ export function getSalarySortTree(params) {
     params
   })
 }
+
+export function getSortGroupBy(params) {
+  return axios({
+    url: '/fundsalary/selectSortGroupBy',
+    method: 'get',
+    params
+  })
+}

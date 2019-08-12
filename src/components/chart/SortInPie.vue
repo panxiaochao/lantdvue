@@ -8,7 +8,7 @@
 import echarts from "echarts";
 import 'echarts/theme/macarons.js'
 export default {
-  name: "Salarybar",
+  name: "SortInPie",
   props: {
     id: {
       type: String,
@@ -23,7 +23,7 @@ export default {
       default: "350px"
     },
     data: {
-      type: Object
+      type: Array
     }
   },
   data() {
@@ -47,48 +47,38 @@ export default {
     initChart() {
       const that = this
       that.chart = echarts.init(this.$refs.myEchart, 'macarons');
+      const legendData = []
+      for (let i = 0; i < this.data.length; i++) {
+        legendData.push(this.data[i].name)
+      }
       const option = {
-        title: {
-          text: '账户资金类别',
-          textStyle: {
-            fontSize: 16
-          },
-          top: '10px',
-          x: 'center'
-        },
-        grid: {
-          //top: '10%',
-          left: '3%',
-          right: '3%',
-          bottom: '3%',
-          containLabel: true
-        },
         tooltip: {
-          axisPointer: {
-            type: 'cross'
-          },
-          formatter: '{b}：{c} 元'
+          trigger: 'item',
+          confine: true,
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        xAxis: {
-          type: 'category',
-          axisTick: {
-            alignWithLabel: true
-          },
-          axisLabel: {
-            interval: 0,
-            rotate: 20
-          },
-          data: this.data.xAxis
-        },
-        yAxis: {
-          type: 'value',
-          name: '单位：元'
+        legend: {
+          x: 'center',
+          data: legendData
         },
         series: [{
-          name: '账户资金类别',
-          data: this.data.data,
-          type: 'bar',
-          barWidth: '30'
+          name: '资金账户',
+          type: 'pie',
+          minAngle: 15,
+          minShowLabelAngle: 15,
+          radius: '45%',
+          center: ['50%', '50%'],
+          data: this.data,
+          label: {
+            fontSize: '14'
+          },
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
         }]
       }
       // 把配置和数据放这里

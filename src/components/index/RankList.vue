@@ -1,6 +1,9 @@
 <template>
 <div class="rank">
-  <h3 class="title">{{ title }}</h3>
+  <div class="rank-title">
+    <h3 class="title">{{ title }}</h3>
+    <div class="sumtext">资金总额：<span>{{sumBalance}}</span> 元</div>
+  </div>
   <ul class="list">
     <li :key="index" v-for="(item, index) in list">
       <span :class="index < 3 ? 'active' : null">{{ index + 1 }}</span>
@@ -24,6 +27,16 @@ export default {
       type: Array,
       default: null
     }
+  },
+  computed: {
+    sumBalance: function() {
+      let sum = 0
+      console.log(this.list);
+      for (var i = 0; i < this.list.length; i++) {
+        sum += this.list[i].total
+      }
+      return sum
+    }
   }
 }
 </script>
@@ -32,8 +45,23 @@ export default {
 .rank {
     padding: 15px;
 
+    .rank-title {
+        display: flex;
+        justify-content: space-between;
+        .sumtext {
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.85);
+            span {
+                font-size: 18px;
+                color: #F44336;
+                font-weight: 600;
+            }
+        }
+    }
+
     .list {
-        margin: 25px 0 0;
+        margin: 15px 0 0;
         padding: 0;
         list-style: none;
 
