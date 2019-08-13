@@ -22,12 +22,12 @@
   </a-row>
   <a-row :gutter="24" class="card-row">
     <a-col :md="12">
-      <a-card title="3月支出类别占比" :loading="sortoutpie.loading" :bordered="false">
+      <a-card :title="month+'月支出类别占比'" :loading="sortoutpie.loading" :bordered="false">
         <SortOutPie id="sortoutpie" :data="sortoutpie.data" />
       </a-card>
     </a-col>
     <a-col :md="12">
-      <a-card title="3月收入排行" :loading="sortinpie.loading" :bordered="false">
+      <a-card :title="month+'月收入排行'" :loading="sortinpie.loading" :bordered="false">
         <SortOutPie id="sortinpie" :data="sortinpie.data" />
       </a-card>
     </a-col>
@@ -57,6 +57,7 @@ export default {
   },
   data() {
     return {
+      month: '',
       salarychart: {
         loading: true,
         data: [],
@@ -71,6 +72,10 @@ export default {
         data: [],
       }
     }
+  },
+  created: function() {
+    let date = new Date()
+    this.month = (date.getMonth() + 1)
   },
   // 页面初始化
   mounted() {

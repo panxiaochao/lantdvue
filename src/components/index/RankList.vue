@@ -31,7 +31,7 @@ export default {
   computed: {
     sumBalance: function() {
       let sum = 0
-      console.log(this.list);
+      //console.log(this.list);
       for (var i = 0; i < this.list.length; i++) {
         sum += this.list[i].total
       }
